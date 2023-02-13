@@ -16,6 +16,11 @@ When you normalize a database, you have four goals:
 2.	Can I make changes in a single location, rather than in many tables for the same information?
 3.	Can I access and manipulate data quickly and efficiently?
 
+### Primary and foreign keys
+A primary key is a unique column in a particular table. This is the first column in each of our tables. Here, those columns are all called id, but that doesn't necessarily have to be the name. It is common that the primary key is the first column in our tables in most databases.
+A foreign key is a column in one table that is a primary key in a different table. 
+In ERD the crow's foot shows that the FK can actually appear in many rows while the single line is telling us that the PK shows that id appears only once per row in this table.
+
 ### Inner Joins
 Joins allow us to pull data from more than one table at a time.
 ```sql

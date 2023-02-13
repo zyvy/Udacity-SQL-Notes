@@ -13,6 +13,12 @@ WHERE (standard_qty = 0 OR gloss_qty = 0) AND occurred_at = ‘2016-1-01’;
 - Foreign Key (FK) – A foreign key is a column in one table that is the primary key in a different table.
 - Postgres - A popular open-source database with a very complete library of analytical functions. This is the database used in the course.
 
+### ERD
+ These diagrams help you visualize the data you are analyzing including:
+- The names of the tables.
+- The columns in each table.
+- The way the tables work together.
+
 ### Why is SQL important?
 1.	Easy to understand
 2.	Can access data directly
@@ -20,6 +26,15 @@ WHERE (standard_qty = 0 OR gloss_qty = 0) AND occurred_at = ‘2016-1-01’;
 4.	Can replicate data
 5.	Can analyze multiple tables at once
 6.	Can do complex analysis
+7.	Incredible flexible
+
+### There are some major advantages to using traditional relational databases, which we interact with using SQL. The five most apparent are:
+
+SQL is easy to understand.
+Traditional databases allow us to access data directly.
+Traditional databases allow us to audit and replicate our data.
+SQL is a great tool for analyzing multiple tables at once.
+SQL allows you to analyze more complex questions than dashboard tools like Google Analytics.
 
 ### Why do businesses like DBs? 
 1.	Data integrity is ensured
@@ -27,9 +42,9 @@ WHERE (standard_qty = 0 OR gloss_qty = 0) AND occurred_at = ‘2016-1-01’;
 3.	Data is easily shared
 
 ### Key points about DBs:
-1.	Data in DBs is stored in tables that can be thought of just like Excel spreadsheets
-2.	All the data in the same column must match tin terms of data type.
-3.	Consistent column types are one of the main reasons working DBs is fast
+- Data in databases is stored in tables that can be thought of just like Excel spreadsheets. For the most part, you can think of a database as a bunch of Excel spreadsheets. Each spreadsheet has rows and columns. Where each row holds data on a transaction, a person, a company, etc., while each column holds data pertaining to a particular aspect of one of the rows you care about like a name, location, a unique id, etc.
+- All the data in the same column must match in terms of data type. An entire column is considered quantitative, discrete, or as some sort of string. This means if you have one row with a string in a particular column, the entire column might change to a text data type. This can be very bad if you want to do math with this column!
+- Consistent column types are one of the main reasons working with databases is fast. Often databases hold a LOT of data. So, knowing that the columns are all of the same types of data means that obtaining data from a database can still be fast.
 
 ### What are some examples of SQL DBs?
 1.	MySQL
@@ -43,6 +58,9 @@ A statement in SQL is a command that allows you to perform a certain function.  
  - CREATE TABLE is a statement that creates a new table in a database.
  - DROP TABLE is a statement that removes a table in a database.
  - SELECT allows you to read data and display it. This is called a query.
+
+SQL queries can be run successfully whether characters are written in upper- or lower-case. In other words, SQL queries are not case-sensitive. But it is common and best practice to capitalize all SQL commands, like SELECT and FROM, and keep everything else in your query lower case.
+It is common to use underscores and avoid spaces in column names. It is a bit annoying to work with spaces in SQL. In Postgres, if you have spaces in column or table names, you need to refer to these columns/tables with double quotes around them (Ex: FROM "Table Name" as opposed to FROM table_name). In other environments, you might see this as square brackets instead (Ex: FROM [Table Name]).
 
 ### SELECT * FROM orders;
 This statement is composed of clauses. Clauses always appear in the same order. Some clauses are required and others are optional. The SELECT clause tells the database which columns you want to read from the database. The * is called a wildcard. There are various types of wildcards. This one represents “all columns.” The FROM clause tells the database which table to you want to select columns from. Both SELECT and FROM are mandatory clauses in any SELECT statement. You can write statements in lower case, but traditionally, SQL commands are written all uppercase. So, “select * from orders;” works just fine, but “SELECT * FROM orders;” is more conventional. Sometimes you’ll be required to end a statement in a semicolon, but it depends on the environment. It’s a good habit to include the semicolon at the end.
@@ -72,6 +90,8 @@ ORDER BY occurred_at DESC, total_amt_usd
 LIMIT 10
 ```
 Notice that we specified that “occurred_at” should be descending order, but total_amt_usd should be in the default ascending order.
+ORDER BY in a SQL query only has temporary effects, for the results of that query, unlike sorting a sheet by column in Excel or Sheets.
+The ORDER BY statement always comes in a query after the SELECT and FROM statements, but before the LIMIT statement. If you are using the LIMIT statement, it will always appear last. As you learn additional commands, the order of these statements will matter more.
 
 ### The WHERE Clause
 The WHERE clause goes between FROM and ORDER BY. WHERE allows you narrow your search to results where one column has a particular value or range of values. For example:

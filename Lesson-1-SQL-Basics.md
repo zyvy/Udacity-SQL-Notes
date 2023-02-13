@@ -94,7 +94,7 @@ ORDER BY in a SQL query only has temporary effects, for the results of that quer
 The ORDER BY statement always comes in a query after the SELECT and FROM statements, but before the LIMIT statement. If you are using the LIMIT statement, it will always appear last. As you learn additional commands, the order of these statements will matter more.
 
 ### The WHERE Clause
-The WHERE clause goes between FROM and ORDER BY. WHERE allows you narrow your search to results where one column has a particular value or range of values. For example:
+The WHERE clause goes between FROM and ORDER BY. WHERE statement, we can display subsets of tables based on conditions that must be met. You can also think of the WHERE command as filtering the data. WHERE allows you narrow your search to results where one column has a particular value or range of values. For example:
 ```sql
 SELECT *
 FROM orders
@@ -108,6 +108,9 @@ SELECT name, website, primary_poc
 FROM accounts
 WHERE name = 'Exxon Mobil';
 ```
+WHERE statement can also be used with non-numeric data. 
+Commonly when we are using WHERE with non-numeric data fields, we use the LIKE, NOT, or IN operators. 
+
 
 ### Derived Columns
 A derived column is a column you create by using mathematical operations on already existing columns. For example:
@@ -117,6 +120,7 @@ FROM orders
 LIMIT 10;
 ```
 Here, we select the “id” column and a second derived column that we create by dividing standard_amt_usd by total_amt_usd and multiplying that by 100. We use the AS clause to name this new derived column “std_percent.” Then we add a third column – “total_amt_usd”.
+This derived column, and its alias, are generally only temporary, existing just for the duration of your query.
 
 ### Logical Operators
 Logical operators allow you to create longer more complex statements. Here’s a summary of the logical operators:
@@ -134,6 +138,8 @@ WHERE website LIKE '%google%';
 ```
 Here we’re selecting all columns from the “accounts” table where the “website” column is like the word “google,” but preceded by 0 or more characters of any type and/or followed by 0 or more characters of any type.  Not that LIKE is always used in the WHERE clause.
 
+The LIKE operator is frequently used with %. The % tells us that we might want any number of characters leading up to a particular set of characters or following a certain set of characters, as we saw with the google syntax above. Remember you will need to use single quotes for the text you pass to the LIKE operator because these lower and uppercase letters are not the same within the string. Searching for 'T' is not the same as searching for 't'. In other SQL environments (outside the classroom), you can use either single or double-quotes.
+
 ### IN Example
  The IN operator is useful for working with both numeric and text columns. This operator allows you to use an =, but for more than one item of that particular column. We can check one, two, or many column values for which we want to pull data, but all within the same query.
 ```sql
@@ -142,6 +148,7 @@ FROM orders
 WHERE account_id IN (1001,1021);
 ```
 Here’s we’re selecting all columns from the “orders” table but only where the “account_id” is in the group 1001 or 1021. 
+Can also use OR
 
 ### NOT Example
 You can add the NOT operator before IN or LIKE to get the inverse of the results those queries would otherwise produce. For example:
@@ -176,6 +183,12 @@ FROM orders
 WHERE occurred_at BETWEEN '2016-04-01' AND '2016-10-01'
 ORDER BY occurred_at
 ```
+Or WHERE column BETWEEN 6 AND 10
+BETWEEN operator in SQL is inclusive; that is, the endpoint values are included. 
+BUT:
+You will notice that using BETWEEN is tricky for dates! While BETWEEN is generally inclusive of endpoints, it assumes the time is at 00:00:00 (i.e. midnight) for dates. This is the reason why we set the right-side endpoint of the period at '2017-01-01'. Right border is important!
+
+
 Whereas the AND operator makes a statement more exclusive of some records, the OR operator makes a statement more inclusive.
 ```sql
 SELECT *

@@ -20,6 +20,7 @@ When you normalize a database, you have four goals:
 A primary key is a unique column in a particular table. This is the first column in each of our tables. Here, those columns are all called id, but that doesn't necessarily have to be the name. It is common that the primary key is the first column in our tables in most databases.
 A foreign key is a column in one table that is a primary key in a different table. 
 In ERD the crow's foot shows that the FK can actually appear in many rows while the single line is telling us that the PK shows that id appears only once per row in this table.
+Traditional databases do not allow for many-to-many relationships, as these break the schema down pretty quickly.
 
 ### Inner Joins
 Joins allow us to pull data from more than one table at a time.
@@ -123,6 +124,9 @@ ON o.account_id = a.id
 ```
 Here, again, we're selecting the id and name columns from the accounts table and the total column from the orders table. We're starting with the orders table (which we alias to o), and then RIGHT JOIN the accounts table (which we alias to a). We join these tables ON the order table's account_id column (a foreign key in orders) and the accounts table's id column (the primary key in accounts). Now the results that we get back from the query have changed. If you evaluate the query in the classroom's IDE and then scroll all the way to the bottom of the results, you will now see one account id, 1731, and name, Goldman Sachs Group, that does not have a corresponding total. 
 
+### NULL
+If there is not matching information in the JOINed table, then you will have columns with empty cells. These empty cells introduce a new data type called NULL. You will learn about NULLs in detail in the next lesson, but for now you have a quick introduction as you can consider any cell without data as NULL.
+
 ### What makes the orders table the left table in a Venn diagram of the two tables?
 The orders table is the left hand part of the diagram because it is the table that appears in the FROM clause. You can switch things around and use accounts in the FROM clause, and in that case, accounts will now be the left hand part of the diagram and orders will be the right hand part. 
 
@@ -130,6 +134,19 @@ In the Udacity course, the course designers generally use LEFT JOINs and do not 
 
 ### Outer Joins
 An OUTER JOIN, also called a FULL OUTER JOIN, is a join that will return rows from the inner join result, and also rows from either of the tables being joined. This join is used rarely.
+SELECT column_name(s)
+FROM table1
+(FULL) OUTER JOIN table2
+ON table1.column_name = table2.column_name
+WHERE condition;
+This will return the inner join result set, as well as any unmatched rows from either of the two tables being joined.
+Again this returns rows that do not match one another from the two tables. The use cases for a full outer join are very rare.
+
+### Some remarks
+- A LEFT JOIN and RIGHT JOIN do the same thing if we change the tables that are in the FROM and JOIN statements.
+- A LEFT JOIN will at least return all the rows that are in an INNER JOIN.
+- JOIN and INNER JOIN are the same.
+- A LEFT OUTER JOIN is the same as LEFT JOIN
 
 ### Joins and Filtering
 You can sometimes accomplish the same thing by either putting logic in the ON clause or by using a WHERE clause. Logic in the ON clause reduces the rows before combining the tables, whereas logic in the WHERE clause occurs after the join occurs. Put another way, when the database executes a query, it executes the join and everything in the ON clause first. Think of this as building the new result set. That result set is then filtered using the WHERE clause. So, these two statements produce the same results, but in different ways:
@@ -251,3 +268,5 @@ on o.account_id = a.id
 where o.occurred_at between '01-01-2015' and '01-01-2016'
 order by o.occurred_at desc
 ```
+
+There are a few more advanced JOINs that we did not cover here, and they are used in very specific use cases. UNION and UNION ALL, CROSS JOIN, and the tricky SELF JOIN. These are more advanced than this course will cover, but it is useful to be aware that they exist, as they are useful in special cases.

@@ -29,6 +29,8 @@ AND occurred_at < '2017-01-01'
 ```
 Here, we SELECT the COUNT of all records, which we'll call order_count, FROM the orders table WHERE occurred_at is great than or equal to '2016-12-01' AND less than '2017-01-01'. 
 
+Tip: If the COUNT result of a column is less then the number of rows this means the difference is the number of nulls
+
 ### SUM
 SUM will add up all of the numerical values in a column, ignoring the null values. Here's an example,
 ```sql
@@ -38,6 +40,7 @@ SELECT SUM(standard_qty) AS standard,
 FROM orders
 ```
 Here, we SELECT the SUM for each of three different columns: standard_qty, gloss_qty, and poster_qty. We also assign them aliases: standard, gloss, and poster. We get all of these FROM the orders table.
+Aggregators only aggregate vertically - the values of a column. If you want to perform a calculation across rows, you would do this with simple arithmetic.
 
 ### MIN and MAX
 MIN and MAX work similarly to SUM. However, functionally, MIN and MAX are similar to COUNT in that they can be used on non-numerical columns. Depending on the column type, MIN will return the lowest number, earliest date, or non-numerical value as early in the alphabet as possible. As you might suspect, MAX does the opposite—it returns the highest number, the latest date, or the non-numerical value closest alphabetically to “Z.” Here's an example:

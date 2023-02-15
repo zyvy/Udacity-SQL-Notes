@@ -149,6 +149,9 @@ FROM orders
 GROUP BY account_id
 ORDER BY account_id
 ```
+
+It is worth noting that SQL evaluates the aggregations before the LIMIT clause. If you don’t group by any columns, you’ll get a 1-row result—no problem there. If you group by a column with enough unique values that it exceeds the LIMIT number, the aggregates will be calculated, and then some rows will simply be omitted from the results.
+
 Here, we select orders.account_id and the sums of quantities of each type of paper. We get those FROM the orders table. However, we must GROUP BY account_id if what we want to see is the sums per account. It also helps to ORDER BY the account_id.
 
 ### GROUP BY Practice Problems from section 14
@@ -251,6 +254,7 @@ GROUP BY account_id, channel
 ORDER BY account_id, channel DESC
 ```
 Here, we're getting the account id, channel and count of id from web_events, and we're grouping by both account_id and channel. We're also ordering by account_id first, then channel. Note that the order that you list the columns in the GROUP BY clause doesn't matter, but the order that list columns in the ORDER BY clause does.
+The order of columns listed in the ORDER BY clause does make a difference. You are ordering the columns from left to right.
 
 ### Problems from Section 17
 1. For each account, determine the average amount of each type of paper they purchased across their orders. Your result should have four columns - one for the account name and one for the average quantity purchased for each of the paper types for each account.
@@ -370,6 +374,12 @@ HAVING SUM(total_amt_usd) >= 250000
 ORDER BY 2 DESC
 ```
 As you can see the WHERE clause has been replaced by a HAVING clause that appears after the GROUP BY clause.
+
+- WHERE subsets the returned data based on a logical condition.
+- WHERE appears after the FROM, JOIN, and ON clauses, but before GROUP BY.
+- HAVING appears after the GROUP BY clause, but before the ORDER BY clause.
+- HAVING is like WHERE, but it works on logical statements involving aggregations.
+
 
 ### Problems 
 

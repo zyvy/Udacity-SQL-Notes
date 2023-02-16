@@ -47,6 +47,8 @@ Both joins and subqueries combine data from one or more tables into a single res
 | Syntax       | A subquery is query within a query. The syntax has multiple SELECT and FROM clauses.                                                                                              | A join stitches together multiple tales with a common key or column. A join clause cannot stand and be run independently.            |
 | Dependencies | A subquery clause can be run completely independently. Why trying to debug code, subqueries are often run independently to pressure test results before running the larger query. | A join clause cannot stand and be run independently.                                                                                 |
 
+However, there is an exception. When a subquery, typically in the form of a nested or inline subquery, is correlated to its outer query, it cannot run independently. This is most certainly an edge case since correlated subqueries are rarely implemented compared to standalone, simple subqueries.
+
 ### Similarities between joins and subqueries.
 - Output: Both bring together multiple tables to generate a single output. 
 - Deep-Dive: They're similar under the hood.
@@ -64,6 +66,10 @@ Joins:
 - Dependencies: Cannot stand independently. (There's an exception for correlated nested or inline queries.)
 
 ### Placement and Dependencies
+- Must be fully placed inside parentheses
+- Must be fully independent and must be eqecuted on it's own
+- Have two components: dependences, and where it's placed
+
 Placement:
 There are four places where subqueries can be inserted within a larger query:
 - With - This subquery is used when you’d like to “pseudo-create” a table from an existing table and visually scope the temporary table at the top of the larger query. For example,

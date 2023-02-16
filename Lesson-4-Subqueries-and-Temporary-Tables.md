@@ -814,6 +814,9 @@ See Chapter 8 of the MySQL Reference Manual for more information on optimization
 
 1. Do I really a subquery or might a join or aggregation suffice?
 2. If a subquery is necessary, what's the best placement: "with", nested, inline, or scalar?
+3. Run the subquery as an independent query first: is the output what you expect?
+4. Call it something! If you are working with With or Inline subquery, you’ll most certainly need to name it.
+5. Run the entire query -- both the inner query and outer query.
 
 ### With Subqueries
 
@@ -903,6 +906,19 @@ FROM table1
 JOIN table2
 ON table1.account_id = table2.id;
 ```
+Select all of the below that are true regarding WITH statements.
+
+
+When creating multiple tables using WITH, you add a comma after every table except the last table leading to your final query.
+
+The new table name is always aliased using table_name AS, which is followed by your query nested between parentheses.
+
+
+Advantages:
+Look back through your solutions to subqueries and CTEs (WITH statements), which do you find more readable? Which is better for performance?
+- CTEs are more readable.
+- CTEs are more efficient, as the tables aren't recreated with each subquery portion
+
 
 ### WITH Problems
 
@@ -1155,6 +1171,9 @@ FROM t2;
 ### Nested Subqueries
 
 A nested subquery is a subquery placed in the WHERE clause of another query. They're useful when a user wants to filter output using a condition met from another table.
+Use Case for a Nested Subquery
+- When a user wants to filter an output using a condition met from another table.
+- This type of placement also has advantages for making the code easy to read.
 
 Here's an example:
 ```sql
@@ -1171,6 +1190,10 @@ IN (
 ### Inline Subqueries
 
 An inline subquery is a subquery placed in the FROM clause of another query. They're useful when a user needs a pseduo table to aggregate or manipulate an existing table within a larger query. They're similar to WITH clauses, but not as helpful for readability.
+Use Case for Inline Subquery
+- It is a very similar use case to ‘With’ subqueries.
+- Inline subqueries create a “pseudo table” that aggregates or manipulates an existing table to be used in a larger query.
+- The disadvantage of the inline subquery is that it is not easy to read.
 
 Here's an example:
 ```sql
@@ -1193,6 +1216,9 @@ ORDER BY 1;
 ### Scalar Subqueries
 
 A scalar subquery is placed in the SELECT clause of another query. They're useful when you want to return on column and one row from a query. They're performant and also useful when the data set is small. If a scalar subquery does not find a match, it returns NULL. If a scalar subquery finds multiple matches, it returns an error.
+Use Case for Scalar subquery placement:
+- It selects only one column or expression and returns one row, used in the select clause of the main query
+- It has the advantage of performance or if the data set is small
 
 Here's an example:
 ```sql

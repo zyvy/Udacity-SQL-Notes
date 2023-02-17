@@ -180,6 +180,8 @@ PIVOT(
 What this query does is create a pivot table from the student_db table. It uses some concepts that haven't been covered yet.
 
 ### Quiz: CONCAT, LEFT, RIGHT, and SUBSTR
+CONCAT is also can be made by || symbol
+Example: (SUBSTR(date, 7, 4) || '-' || LEFT(date, 2) || '-' || SUBSTR(date, 4, 2))
 
 1. Suppose the company wants to assess the performance of all the sales representatives. Each sales representative is assigned to work in a particular region. To make it easier to understand for the HR team, display the concatenated sales_reps.id, ‘_’ (underscore), and region.name as EMP_ID_REGION for each sales representative.
 
@@ -221,6 +223,16 @@ select
     concat(account_id, '_', channel, '_', channel_count) as account_channel_count
 from t1
 ```
+
+### CAST
+CAST: Converts a value of any type into a specific, different data type
+CAST(expression AS datatype)
+CAST(salary AS int)
+Use Case
+When the raw data types are unsuitable for analyses. The most common occurrence is when the raw data types all default to strings, and the user has to cast each column to the appropriate data type.
+Cast to a date type. :: is a type cast that can also be represented as CAST(expression AS type).
+	Sample - (SUBSTR(date, 7, 4) || '-' || LEFT(date, 2) || '-' || SUBSTR(date, 4, 2))::DATE
+	
 ### Using CAST 
 
 Take a column formatted like this "01/31/2014 08:00:00 AM +0000" and return a properly formatted DATE.
@@ -242,8 +254,15 @@ select
      	AS DATE)
 from sf_crime_data
 ```
-
+### Advanced cleaning functions
+- Position/Strpos: Used to return the position of information to identify where relevant information is held in a string to then extract across all records
+- Coalesce: Used to return the first non-null value that’s commonly used for normalizing data that’s stretched across multiple columns and includes NULLs.
+	
 ### POSITION and STRPOS
+
+They have different syntaxes and order of arguments:
+strpos(String, Substring);
+position(Substring in String);
 
 1. Use the accounts table to create first and last name columns that hold the first and last names for the primary_poc.
 

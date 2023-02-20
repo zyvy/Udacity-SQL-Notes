@@ -375,6 +375,9 @@ So, for example, looking at row 28, we can see that account 1001 has
 - Row_number(): Ranking is distinct amongst records even with ties in what the table is ranked against.
 - Rank(): Ranking is the same amongst tied values and ranks skip for subsequent values.
 - Dense_rank(): Ranking is the same amongst tied values and ranks do not skip for subsequent values.
+For row_number ranking is distinct for each row, so we will get continious numbers 1,2,3,4...
+For rank() for same rows we will get same numbers 1,1,1,4,4,6. 
+For example for same date_time same numbers.
 
 ### Examples of Ranking
 
@@ -396,10 +399,6 @@ SELECT DENSE_RANK() OVER(ORDER BY date_time) AS rank,
        date_time
 FROM   db;
 ```
-### Diffrences between row_number() and rank()
-For row_number ranking is distinct for each row, so we will get continious numbers 1,2,3,4...
-For rank() for same rows we will get same numbers 1,1,1,4,4,6. 
-For example for same date_time same numbers.
 
 #### Problems for rank()
 
@@ -436,6 +435,7 @@ WINDOW monthly_window AS
     ORDER BY order_date
   );
 ```
+In this example a monthly_window alias is definded in the end of query by WINDOW function.
 
 An example from our Parch and Posey database:
 ```sql
@@ -648,3 +648,12 @@ group by 1,2,3
 -- In the solution they order by account_id DESC for this one
 order by 1 desc
 ```
+
+
+Key Takeaways:
+Window functions are similar to aggregate/group by functions.
+Window functions maintain the total number of rows from the original dataset.
+Window functions are typically used in the following ways:
+Measure and/or track changes over time.
+Rank a column to be used for outreach and/or prioritization.
+If you are planning to write multiple window functions that leverage the same PARTITION BY, OVER, and ORDER BY in a single query, leveraging aliases will help tighten your syntax.

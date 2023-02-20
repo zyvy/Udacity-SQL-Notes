@@ -20,6 +20,36 @@ A few cases where you’d have these needs are described below:
 
 A window function is a calculation across a set of rows within a table that is related to the current row. Window functions are similar to aggregate functions, but they retain the total number of rows between the input table and the output table (or result).
 
+This means we’re typically:
+
+- Calculating running totals that incorporate the current row or,
+- Ranking records across rows, inclusive of the current one
+
+When to use:
+- When need to track changes over time or build a running total
+- When want to rank a column
+- When want to retain the total number of rows and not condense the table at all
+
+When window functions are used, you’ll notice new column names like the following:
+
+- Average running price
+- Running total orders
+- Running sum sales
+- Rank
+- Percentile
+Useful functions:
+Partition by: A subclause of the OVER clause. Similar to GROUP BY.
+Over: Typically precedes the partition by that signals what to “GROUP BY”.
+Aggregates: Aggregate functions that are used in window functions, too (e.g., sum, count, avg).
+Row_number(): Ranking function where each row gets a different number.
+Rank(): Ranking function where a row could get the same rank if they have the same value.
+Dense_rank(): Ranking function similar to rank() but ranks are not skipped with ties.
+Aliases: Shorthand that can be used if there are several window functions in one query.
+Percentiles: Defines what percentile a value falls into over the entire table.
+Lag/Lead: Calculating differences between rows’ values.
+
+Window function allows users to compare one row to another without doing any joins. 
+
 Window functions are permitted only in the SELECT list and the ORDER BY clause of the query.
 
 They are forbidden elsewhere, such as in GROUP BY, HAVING and WHERE clauses. This is because they logically execute after the processing of those clauses. Also, window functions execute after regular aggregate functions. This means it is valid to include an aggregate function call in the arguments of a window function, but not vice versa.
@@ -38,6 +68,28 @@ AGGREGATE_FUNCTION (column_1) OVER
     ORDER BY column_3
   ) AS new_column_name;
 ```
+There are a few key terms to review as a part of understanding core window functions:
+PARTITION BY: A subclause of the OVER clause. I like to think of PARTITION BY as the GROUP BY equivalent in window functions. PARTITION BY allows you to determine what you’d like to “group by” within the window function. Most often, you are partitioning by a month, region, etc. as you are tracking changes over time.
+OVER: This syntax signals a window function and precedes the details of the window function itself.
+
+The sequence of Code for Window Functions
+Typically, when you are writing a window function that tracks changes or a metric over time, you are likely to structure your syntax with the following components:
+
+An aggregation function (e.g., sum, count, or average) + the column you’d like to track
+OVER
+PARTITION BY + the column you’d like to “group by”
+ORDER BY (optional and is often a date column)
+AS + the new column name
+
+Similarities
+Both groups by/aggregation queries and window functions serve the same use case. Synthesizing information over time and often grouped by a column (e.g., a region, month, customer group, etc.)
+
+Differences
+The difference between group by/aggregation queries and window functions is simple. The output of window functions retains all individual records whereas the group by/aggregation queries condense or collapse information.
+
+Key Notes
+You can’t use window functions and standard aggregations in the same query. More specifically, you can’t include window functions in a GROUP BY clause.
+Feel free to use as many window functions as you’d like in a single query. E.g., if you’d like to have an average, sum, and count aggregate function that captures three metrics’ running totals, go for it.
 
 For example:
 

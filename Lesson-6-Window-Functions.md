@@ -396,6 +396,10 @@ SELECT DENSE_RANK() OVER(ORDER BY date_time) AS rank,
        date_time
 FROM   db;
 ```
+### Diffrences between row_number() and rank()
+For row_number ranking is distinct for each row, so we will get continious numbers 1,2,3,4...
+For rank() for same rows we will get same numbers 1,1,1,4,4,6. 
+For example for same date_time same numbers.
 
 #### Problems for rank()
 

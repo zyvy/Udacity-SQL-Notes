@@ -344,6 +344,8 @@ Try to run your queries on only a subset of your data. This called "exploratory 
 
 Aggregations: When aggregations appear in the main query, they can really sloq down your query. However, you can create a subset of your data by creating a subquery. The subquery will run first. Then you aggregate on that subquery.
 
+LIMITation does not help becouse agregations run first
+
 For example:
 
 ```sql

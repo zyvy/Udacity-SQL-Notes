@@ -20,6 +20,8 @@ Here, we SELECT all columns FROM the account table WHERE the primary_poc IS NOT 
 ### COUNT
 The COUNT function gives you the total number of records in a table or the number of non-null records in a particular column in a table. COUNT works in columns with numerical values, but also in other columns. That's not true of some functions, like SUM and AVG. 
 
+ The COUNT() function counts all rows, regardless of whether any columns contain NULL values, while COUNT(column_name) counts only non-NULL values in the specified column.
+
 An example,
 ```sql
 SELECT COUNT(*) AS order_count
